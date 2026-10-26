@@ -1,0 +1,231 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Outfit", system-ui, sans-serif;
+  --font-display: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  --color-bg: #09090b;
+  --color-elevated: #121214;
+  --color-subtle: #1c1c21;
+  --color-line: #2a2a30;
+  --color-fg: #f4f4f5;
+  --color-muted: #a1a1aa;
+  --color-faint: #71717a;
+  --color-accent: #d63a32;
+  --color-accent-fg: #fff7f6;
+  --color-bar: #3a3a42;
+  --color-ok: #3f8f6b;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    background: var(--color-bg);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100%;
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.display.normal-case {
+  text-transform: none;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+}
+
+.kicker {
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--color-faint);
+}
+
+.poster {
+  font-size: clamp(3.4rem, 9vw, 6.8rem);
+  line-height: 0.82;
+}
+
+.poster-hero {
+  font-size: clamp(3.5rem, 8.4vw, 7.4rem);
+  line-height: 0.8;
+}
+
+.hero-title {
+  font-size: clamp(3.4rem, 11vw, 7.4rem);
+}
+
+.goal-mosaic {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.goal-tile {
+  position: relative;
+  display: block;
+  min-height: 16rem;
+  overflow: hidden;
+}
+
+.goal-a { min-height: 22rem; }
+.goal-d, .goal-e { min-height: 14rem; }
+
+@media (min-width: 1024px) {
+  .goal-mosaic {
+    grid-template-columns: 1.35fr 1fr 1fr;
+    grid-template-rows: 18rem 18rem 14rem;
+  }
+  .goal-a { grid-column: 1; grid-row: 1 / span 2; min-height: 0; }
+  .goal-b { grid-column: 2; grid-row: 1; min-height: 0; }
+  .goal-c { grid-column: 3; grid-row: 1; min-height: 0; }
+  .goal-d { grid-column: 2 / span 2; grid-row: 2; min-height: 0; }
+  .goal-e { grid-column: 1 / span 2; grid-row: 3; min-height: 0; }
+  .goal-f { grid-column: 3; grid-row: 3; min-height: 0; }
+}
+
+.program-stage {
+  display: grid;
+  gap: 0.75rem;
+}
+
+@media (min-width: 1024px) {
+  .program-stage {
+    grid-template-columns: 1.5fr 1fr;
+    grid-template-rows: 16rem 16rem;
+  }
+  .program-lead { grid-row: 1 / span 2; min-height: 0; }
+  .program-side { grid-row: 1 / span 2; }
+}
+
+.film {
+  scrollbar-width: none;
+}
+.film::-webkit-scrollbar {
+  display: none;
+}
+
+.grain {
+  position: relative;
+}
+
+.grain::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.22;
+  mix-blend-mode: overlay;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.18) 0.6px, transparent 0.6px);
+  background-size: 3px 3px;
+}
+
+.float-card {
+  border: 1px solid color-mix(in oklab, var(--color-fg) 18%, transparent);
+  background: color-mix(in oklab, var(--color-bg) 72%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+.section-title {
+  font-size: clamp(2.4rem, 6vw, 4.4rem);
+}
+
+.hero-scrim {
+  background: linear-gradient(
+    90deg,
+    var(--color-bg) 0%,
+    color-mix(in oklab, var(--color-bg) 72%, transparent) 42%,
+    color-mix(in oklab, var(--color-bg) 20%, transparent) 100%
+  );
+}
+
+.tile-scrim {
+  background: linear-gradient(180deg, transparent 18%, color-mix(in oklab, var(--color-bg) 92%, transparent) 100%);
+}
+
+.rise {
+  animation: rise 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.draw {
+  transform-origin: left center;
+  animation: draw 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-scrim {
+    background: linear-gradient(180deg, transparent 10%, var(--color-bg) 78%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise,
+  .draw {
+    animation: none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}

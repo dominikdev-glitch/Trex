@@ -1,0 +1,1 @@
+import{m as e}from"./use-current-user-J3qRyrOk.js";import{t}from"./auth-screen-eO2keyQM.js";var n=e(),r=function(){return(0,n.jsx)(t,{mode:`login`})};export{r as component};

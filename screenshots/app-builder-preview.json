@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "TREX — Train from home",
+      "hasCanvas": false,
+      "bodyTextLen": 2517,
+      "bodyTextHash": "02a64c27606f68f4ac186b2b48d2fef3c7d0b262b0af141a75e19c1f15ef3aed",
+      "bodyTextPrefix": "Skip to content TREX Workouts Programs Pricing HOME TRAINING SYS",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "TREX — Train from home",
+      "hasCanvas": false,
+      "bodyTextLen": 2478,
+      "bodyTextHash": "d4155de35980825f9d018044b2db725872135521ae11bef003c64010dec6f499",
+      "bodyTextPrefix": "Skip to content TREX HOME TRAINING SYSTEM TRAIN FROM HOME. BECOM",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}

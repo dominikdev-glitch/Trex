@@ -1,0 +1,1196 @@
+TREX — PREMIUM HOME FITNESS PLATFORM
+
+You are the Lead Product Designer, Senior Full-Stack Engineer, UI/UX Designer, Motion Designer, and Technical Architect responsible for building a production-quality fitness platform called TREX.
+
+TREX is a visual home-gym platform that allows users to train from home using guided workout programs designed around specific goals such as:
+
+* Lose body fat
+* Gain muscle
+* Build chest
+* Build arms
+* Build shoulders
+* Grow legs
+* Build abs/core
+* Improve strength
+* Improve endurance
+* Full-body transformation
+* Beginner fitness
+* Advanced fitness
+
+The website must feel like a premium fitness product, not a normal template website.
+
+DO NOT build a basic website.
+
+DO NOT create a generic Bootstrap-style dashboard.
+
+DO NOT make it look like a school project.
+
+DO NOT use excessive cards everywhere.
+
+The experience should feel closer to a premium combination of a fitness streaming platform + personal trainer + modern fitness app.
+
+⸻
+
+1. PRODUCT EXPERIENCE
+
+The core idea:
+
+A user visits TREX and immediately understands:
+
+“Tell TREX what body/fitness goal you want, and TREX gives you a visual training path you can follow from home.”
+
+The platform should be highly visual.
+
+Users should be able to:
+
+1. Create an account
+2. Select their fitness goal
+3. Select experience level
+4. Select available equipment
+5. Select training days
+6. Receive a personalized workout path
+7. Watch/perform exercises
+8. Track completed workouts
+9. Track progress
+10. Maintain streaks
+11. Upgrade to a paid membership
+12. Access premium workout programs
+
+⸻
+
+2. BRAND
+
+Brand name:
+
+TREX
+
+Brand personality:
+
+* Powerful
+* Athletic
+* Modern
+* Premium
+* Motivating
+* Slightly aggressive
+* Technological
+* Clean
+* Confident
+
+Avoid cheesy fitness clichés.
+
+TREX should look like a serious fitness technology company.
+
+Suggested visual direction:
+
+* Dark cinematic backgrounds
+* Black / charcoal foundation
+* Strong white typography
+* One powerful accent color
+* Large athlete photography
+* Full-width visual sections
+* Subtle gradients
+* Glass/blur where appropriate
+* Smooth motion
+* Large typography
+* Strong spacing
+* Athletic visual composition
+
+The design should work beautifully on:
+
+* Desktop
+* Tablet
+* Mobile
+
+Mobile must not feel like an afterthought.
+
+⸻
+
+3. LANDING PAGE
+
+Create a visually impressive landing page.
+
+The hero should NOT simply be:
+
+“Get Fit Today”
+
+Instead create a strong product-oriented hero.
+
+Example direction:
+
+TREX
+
+TRAIN FROM HOME.
+
+BECOME STRONGER.
+
+Supporting copy explaining that TREX gives users structured home workouts based on their goals.
+
+Hero visual:
+
+Use a large high-quality fitness/athlete visual occupying a major portion of the viewport.
+
+Create visual depth using:
+
+* gradients
+* lighting
+* subtle particles
+* shadows
+* oversized typography
+* floating UI elements
+* motion
+
+Include a strong CTA:
+
+START TRAINING
+
+Secondary CTA:
+
+EXPLORE WORKOUTS
+
+The first viewport should immediately communicate that TREX is a serious fitness platform.
+
+⸻
+
+4. VISUAL FITNESS GOALS
+
+Create a visually rich goal-selection section.
+
+Goals should be represented with large visual tiles/images rather than boring text buttons.
+
+Examples:
+
+🔥 LOSE FAT
+
+💪 BUILD MUSCLE
+
+🏋️ BUILD CHEST
+
+⚡ BUILD ARMS
+
+🦵 BUILD LEGS
+
+🎯 BUILD ABS
+
+Each goal should have:
+
+* visual image
+* short description
+* difficulty indicator
+* estimated training duration
+* CTA
+
+When hovering/tapping:
+
+* image zoom
+* subtle overlay
+* title animation
+* CTA appears
+* smooth transition
+
+⸻
+
+5. EXERCISE VISUAL SYSTEM
+
+This is extremely important.
+
+TREX must visually demonstrate exercises.
+
+Create exercise pages/components containing:
+
+* Exercise name
+* Large exercise visual/video area
+* Target muscles
+* Difficulty
+* Equipment
+* Sets
+* Reps
+* Rest time
+* Estimated calories
+* Instructions
+* Common mistakes
+* Beginner modification
+* Advanced modification
+
+Example:
+
+PUSH-UP
+
+TARGET
+
+Chest
+Triceps
+Shoulders
+Core
+
+3 SETS × 12 REPS
+
+REST
+60 seconds
+
+Include an obvious visual demonstration area.
+
+The architecture should support actual exercise videos/GIFs/images being added later.
+
+DO NOT fake a video player that cannot be connected to real media.
+
+Build the media component so real video URLs can be stored in Firebase.
+
+⸻
+
+6. HOME WORKOUT PROGRAMS
+
+Create programs such as:
+
+7 DAY BEGINNER START
+
+Goal:
+Build consistency
+
+30 DAY FAT LOSS
+
+Goal:
+Reduce body fat
+
+CHEST BUILDER
+
+Goal:
+Build chest strength and muscle
+
+ARM BUILDER
+
+Goal:
+Develop arms
+
+HOME MUSCLE
+
+Goal:
+Build muscle with minimal equipment
+
+ABS ATTACK
+
+Goal:
+Core development
+
+FULL BODY ATHLETE
+
+Goal:
+Strength + conditioning
+
+Each program needs:
+
+* Cover visual
+* Description
+* Duration
+* Difficulty
+* Equipment
+* Number of workouts
+* Weekly structure
+* Progress indicator
+* Start Program button
+
+⸻
+
+7. INTERACTIVE WORKOUT PLAYER
+
+This should be one of the most impressive parts of TREX.
+
+Create a workout interface where the user can actually follow a session.
+
+Example:
+
+TODAY’S WORKOUT
+
+CHEST + TRICEPS
+
+01 / 08
+
+PUSH-UPS
+
+12 REPS
+
+[exercise visual/video]
+
+NEXT EXERCISE →
+
+Include:
+
+* Countdown
+* Rest timer
+* Sets
+* Reps
+* Exercise progress
+* Workout progress
+* Pause
+* Skip
+* Previous
+* Next
+* Complete exercise
+* Finish workout
+
+When a workout is completed:
+
+Display a strong completion experience.
+
+Example:
+
+WORKOUT COMPLETE
+
+🔥 42 MINUTES
+
+💪 8 EXERCISES
+
+⚡ 320 CALORIES
+
+🏆 +1 STREAK DAY
+
+Use tasteful animations.
+
+⸻
+
+8. USER ONBOARDING
+
+After registration, create a beautiful onboarding flow.
+
+Step 1:
+
+WHAT’S YOUR GOAL?
+
+* Lose fat
+* Build muscle
+* Get stronger
+* Improve fitness
+
+Step 2:
+
+WHAT’S YOUR EXPERIENCE?
+
+* Beginner
+* Intermediate
+* Advanced
+
+Step 3:
+
+HOW MANY DAYS CAN YOU TRAIN?
+
+* 2
+* 3
+* 4
+* 5
+* 6+
+
+Step 4:
+
+WHAT EQUIPMENT DO YOU HAVE?
+
+* None
+* Dumbbells
+* Resistance bands
+* Pull-up bar
+* Bench
+* Full home gym
+
+Step 5:
+
+YOUR PLAN IS READY
+
+Generate the user’s recommended workout program based on their selections.
+
+⸻
+
+9. AUTHENTICATION
+
+Use Firebase Authentication.
+
+Support:
+
+* Email/password registration
+* Email/password login
+* Google authentication if practical
+* Password reset
+* Logout
+* Persistent authentication state
+
+Create protected routes.
+
+Unauthenticated users must not be able to access private dashboard/workout data.
+
+⸻
+
+10. FIREBASE DATABASE
+
+Use Firebase Firestore.
+
+Design a clean scalable schema.
+
+Suggested structure:
+
+users/{userId}
+
+Fields:
+
+* name
+* email
+* photoURL
+* createdAt
+* goal
+* experience
+* trainingDays
+* equipment
+* subscriptionStatus
+* subscriptionPlan
+* subscriptionExpiresAt
+* streak
+* totalWorkouts
+* totalWorkoutMinutes
+* caloriesBurned
+* onboardingCompleted
+
+programs/{programId}
+
+Fields:
+
+* title
+* slug
+* description
+* goal
+* difficulty
+* duration
+* equipment
+* coverImage
+* premium
+* workouts
+
+workouts/{workoutId}
+
+Fields:
+
+* programId
+* title
+* description
+* duration
+* exercises
+* difficulty
+
+exercises/{exerciseId}
+
+Fields:
+
+* name
+* description
+* targetMuscles
+* equipment
+* difficulty
+* videoUrl
+* thumbnailUrl
+* instructions
+* mistakes
+* beginnerModification
+* advancedModification
+
+userWorkouts/{userId}/completed/{workoutId}
+
+Store:
+
+* workoutId
+* completedAt
+* duration
+* calories
+* exercisesCompleted
+
+progress/{userId}
+
+Store:
+
+* body measurements where appropriate
+* workout history
+* streak history
+* goals
+* weekly activity
+
+Design Firestore access around least-privilege security rules.
+
+Do NOT expose another user’s private fitness information.
+
+⸻
+
+11. SUBSCRIPTIONS
+
+TREX must support a monthly subscription model.
+
+Create a premium membership experience.
+
+Plans could be:
+
+FREE
+
+Limited workouts
+
+Basic progress tracking
+
+Limited programs
+
+TREX PRO
+
+Full workout library
+
+Premium programs
+
+Personalized training path
+
+Advanced progress tracking
+
+Unlimited workout history
+
+Premium exercise library
+
+Use a clean monthly pricing interface.
+
+Do NOT hardcode fake payment success.
+
+Create the architecture so a real payment provider can be connected.
+
+The frontend should receive subscription state from the backend/database rather than simply trusting a button click.
+
+If a payment provider is not yet configured, clearly isolate the payment integration behind a service layer.
+
+⸻
+
+12. USER DASHBOARD
+
+After login, users enter the TREX dashboard.
+
+Dashboard should feel like a fitness command center.
+
+Display:
+
+GOOD MORNING, [NAME]
+
+YOUR TRAINING PLAN
+
+Today’s Workout
+
+[large workout visual]
+
+START WORKOUT
+
+Then:
+
+CURRENT STREAK
+
+7 DAYS
+
+WEEKLY PROGRESS
+
+██████░░
+
+3 / 5 WORKOUTS
+
+TOTAL WORKOUTS
+
+24
+
+TRAINING TIME
+
+18h 42m
+
+Add visual progress charts.
+
+Do not overcrowd the dashboard.
+
+Prioritize the most important action:
+
+START TODAY’S WORKOUT
+
+⸻
+
+13. PROGRESS PAGE
+
+Create a beautiful progress analytics interface.
+
+Show:
+
+* Weekly workouts
+* Monthly workouts
+* Workout duration
+* Calories
+* Streak
+* Goal completion
+* Program progress
+
+Use charts where useful.
+
+Allow users to switch:
+
+7 DAYS
+30 DAYS
+90 DAYS
+ALL TIME
+
+Make analytics visually understandable.
+
+⸻
+
+14. WORKOUT LIBRARY
+
+Create a searchable workout library.
+
+Filters:
+
+GOAL
+
+* Fat Loss
+* Muscle
+* Chest
+* Arms
+* Legs
+* Abs
+* Full Body
+
+DIFFICULTY
+
+* Beginner
+* Intermediate
+* Advanced
+
+EQUIPMENT
+
+* None
+* Dumbbells
+* Bands
+* Bench
+* Gym
+
+DURATION
+
+* Under 15 min
+* 15–30 min
+* 30–45 min
+* 45+ min
+
+Create a beautiful filtering interface.
+
+⸻
+
+15. PROFILE
+
+Profile page should include:
+
+* Profile photo
+* Name
+* Goal
+* Experience
+* Equipment
+* Training days
+* Current program
+* Subscription
+* Workout statistics
+* Streak
+* Account settings
+
+Allow users to update onboarding preferences.
+
+⸻
+
+16. NAVIGATION
+
+Desktop navigation:
+
+TREX logo
+
+Home
+Workouts
+Programs
+Progress
+Profile
+
+Premium CTA
+
+Mobile:
+
+Use a polished bottom navigation system.
+
+Possible:
+
+Home
+Workouts
+Progress
+Profile
+
+Keep navigation extremely clean.
+
+⸻
+
+17. ADMIN / CONTENT ARCHITECTURE
+
+Build the system so workout content can eventually be managed through Firebase.
+
+Do not hardcode the entire workout library directly into React components.
+
+Programs and exercises should come from Firestore.
+
+Create reusable components that consume Firebase data.
+
+The architecture should allow adding:
+
+100 exercises
+
+500 exercises
+
+1000+ exercises
+
+without rewriting the frontend.
+
+⸻
+
+18. UI / UX DETAILS
+
+Use modern motion carefully.
+
+Include:
+
+* Page transitions
+* Scroll animations
+* Hover animations
+* Button feedback
+* Progress animations
+* Workout completion animation
+* Skeleton loading
+* Smooth modal transitions
+* Toast notifications
+
+Do NOT over-animate everything.
+
+Animations should make the application feel premium.
+
+⸻
+
+19. VISUAL QUALITY
+
+This is a major requirement.
+
+DO NOT produce:
+
+* Generic white dashboard
+* Bootstrap-looking cards
+* Random gradients
+* Huge amounts of text
+* Cheap stock-template layouts
+* Poor spacing
+* Tiny typography
+* Basic navbar + cards + footer
+
+Instead create:
+
+* Editorial-style layouts
+* Large photography
+* Full-width sections
+* Strong typography
+* Layered visual composition
+* Premium dark interface
+* Dynamic sections
+* Visual exercise content
+* Cinematic imagery
+* Responsive design
+
+Think:
+
+fitness streaming platform + modern SaaS + premium sports brand.
+
+⸻
+
+20. IMAGE / MEDIA SYSTEM
+
+Do not invent fake image URLs.
+
+Create a proper media abstraction.
+
+Example:
+
+exercise.thumbnailUrl
+exercise.videoUrl
+program.coverImage
+
+If media assets are unavailable during development:
+
+Use clearly marked local placeholder assets.
+
+Make it easy to replace them later.
+
+Prefer legally usable/licensed fitness media.
+
+⸻
+
+21. RESPONSIVENESS
+
+The site must be excellent on:
+
+375px mobile
+390px mobile
+430px mobile
+768px tablet
+1024px laptop
+1440px desktop
+1920px large desktop
+
+Do not simply shrink the desktop UI.
+
+Redesign layouts appropriately for mobile.
+
+Workout player must be particularly good on mobile.
+
+⸻
+
+22. TECH STACK
+
+Use:
+
+React
+
+TypeScript
+
+Vite
+
+Tailwind CSS
+
+Firebase
+
+Firebase Authentication
+
+Cloud Firestore
+
+Firebase Storage where appropriate
+
+Use a modern routing solution.
+
+Use reusable component architecture.
+
+Use clean TypeScript types.
+
+Use environment variables for Firebase configuration.
+
+Never commit Firebase secrets or private credentials.
+
+⸻
+
+23. FIREBASE SECURITY
+
+Implement proper Firestore security rules.
+
+Users can:
+
+* Read/write their own private profile
+* Read their own workout history
+* Write their own progress
+
+Public users may read only intentionally public workout/program data.
+
+Admin-only content operations must require proper authorization.
+
+Do not rely only on frontend checks for authorization.
+
+⸻
+
+24. PERFORMANCE
+
+Optimize for:
+
+* Fast initial load
+* Lazy-loaded workout media
+* Image optimization
+* Code splitting
+* Efficient Firestore queries
+* Minimal unnecessary re-renders
+
+Do not download an entire workout library when the user opens the homepage.
+
+⸻
+
+25. ACCESSIBILITY
+
+Include:
+
+* Keyboard navigation
+* Visible focus states
+* Semantic HTML
+* Proper button labels
+* Accessible forms
+* Sufficient contrast
+* Reduced-motion support
+
+⸻
+
+26. ERROR / EMPTY STATES
+
+Design proper states for:
+
+* No workouts
+* No progress
+* Failed Firebase request
+* Offline connection
+* Expired subscription
+* Missing media
+* Invalid login
+* Empty search
+* Payment failure
+
+Never leave blank white screens.
+
+⸻
+
+27. COMPONENT ARCHITECTURE
+
+Create reusable components such as:
+
+Navbar
+MobileNav
+Hero
+GoalCard
+ProgramCard
+WorkoutCard
+ExerciseCard
+ExercisePlayer
+WorkoutPlayer
+ProgressChart
+StreakWidget
+SubscriptionCard
+PricingSection
+ProfileCard
+Modal
+Toast
+LoadingSkeleton
+EmptyState
+ProtectedRoute
+
+Keep components modular.
+
+⸻
+
+28. ROUTES
+
+Create at minimum:
+
+/
+
+/login
+
+/register
+
+/onboarding
+
+/dashboard
+
+/workouts
+
+/workouts/:id
+
+/programs
+
+/programs/:id
+
+/workout/:id/player
+
+/progress
+
+/profile
+
+/pricing
+
+/settings
+
+⸻
+
+29. USER FLOW
+
+The complete flow should feel coherent:
+
+LANDING PAGE
+
+↓
+
+START TRAINING
+
+↓
+
+REGISTER
+
+↓
+
+ONBOARDING
+
+↓
+
+SELECT GOAL
+
+↓
+
+SELECT EXPERIENCE
+
+↓
+
+SELECT TRAINING DAYS
+
+↓
+
+SELECT EQUIPMENT
+
+↓
+
+PERSONALIZED PLAN
+
+↓
+
+DASHBOARD
+
+↓
+
+TODAY’S WORKOUT
+
+↓
+
+WORKOUT PLAYER
+
+↓
+
+COMPLETE WORKOUT
+
+↓
+
+UPDATE PROGRESS
+
+↓
+
+RETURN TOMORROW
+
+The user should always know what to do next.
+
+⸻
+
+30. REAL PRODUCT BEHAVIOR
+
+Do not create fake interactions.
+
+If a button says:
+
+START WORKOUT
+
+it must actually navigate to the workout.
+
+If a user completes a workout:
+
+save the completion to Firebase.
+
+If streak changes:
+
+calculate it from workout history.
+
+If subscription changes:
+
+reflect it throughout the application.
+
+If onboarding changes:
+
+update the user’s profile.
+
+If a workout is bookmarked:
+
+persist it.
+
+If a user logs out:
+
+protected pages become inaccessible.
+
+Build actual functionality.
+
+⸻
+
+31. IMPORTANT DEVELOPMENT RULE
+
+Do not stop after creating the landing page.
+
+Build the actual application.
+
+Prioritize in this order:
+
+1. Project foundation
+2. Firebase configuration
+3. Authentication
+4. Database models
+5. Security rules
+6. Landing page
+7. Onboarding
+8. Dashboard
+9. Workout library
+10. Exercise system
+11. Workout player
+12. Progress tracking
+13. Subscription architecture
+14. Profile/settings
+15. Responsive polish
+16. Animations
+17. Error states
+18. Production cleanup
+
+⸻
+
+32. CODE QUALITY
+
+Write production-quality code.
+
+Avoid:
+
+* giant components
+* duplicated logic
+* unnecessary dependencies
+* hardcoded user data
+* fake APIs
+* fake authentication
+* fake subscription states
+* inline secrets
+* unnecessary complexity
+
+Use:
+
+* TypeScript types
+* reusable hooks
+* service layers
+* Firebase services
+* clear folder structure
+* environment variables
+* error handling
+
+⸻
+
+33. FINAL VISUAL TEST
+
+Before considering the project complete, inspect every major screen visually.
+
+Check:
+
+* Mobile
+* Desktop
+* Empty states
+* Loading states
+* Logged-out state
+* Logged-in state
+* Premium state
+* Free state
+
+Fix anything that looks like a generic AI-generated website.
+
+The final result should look like something a real startup could launch publicly.
+
+⸻
+
+FINAL REQUIREMENT
+
+TREX is NOT a website that merely talks about fitness.
+
+TREX IS THE FITNESS PRODUCT.
+
+Users should be able to enter the platform, choose a goal, receive a workout path, perform workouts, track progress, and understand why they would pay for TREX PRO.
+
+Build the entire experience around that principle.
+
+Do not give me a prototype that only looks good.
+
+Build the functional foundation and the premium visual experience together.
