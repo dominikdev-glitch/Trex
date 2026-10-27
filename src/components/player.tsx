@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Pause, Play, SkipBack, SkipForward } from "lucide-react";
+import { Pause, Play, SkipBack, SkipForward, Volume2, VolumeX } from "lucide-react";
 import { completeWorkout } from "@/lib/account.functions";
+import { coachLine, speakCoach } from "@/lib/coach";
 import { formatClock, formatDuration, prescription } from "@/lib/format";
 import type { CompletionResult, WorkoutDetail } from "@/lib/types";
 import { MediaFrame } from "@/components/media";
@@ -22,6 +23,7 @@ export function WorkoutPlayer({ detail }: { detail: WorkoutDetail }) {
   const [saving, setSaving] = useState(false);
   const [cues, setCues] = useState(false);
   const [restLabel, setRestLabel] = useState("Recover");
+  const [coachOn, setCoachOn] = useState(true);
 
   const pausedRef = useRef(paused);
   const phaseRef = useRef(phase);
@@ -37,8 +39,12 @@ export function WorkoutPlayer({ detail }: { detail: WorkoutDetail }) {
   const setNoRef = useRef(1);
   const doneCountRef = useRef(0);
   const advanceRef = useRef<() => void>(() => {});
+  const coachOnRef = useRef(coachOn);
+  const midCueFiredRef = useRef(false);
+  const restReadyFiredRef = useRef(false);
   pausedRef.current = paused;
   phaseRef.current = phase;
+  coachOnRef.current = coachOn;
 
   const exercise = exercises[index];
   const total = exercises.length;
@@ -62,6 +68,8 @@ export function WorkoutPlayer({ detail }: { detail: WorkoutDetail }) {
     timerKindRef.current = kind;
     setLeft(seconds);
     endAtRef.current = Date.now() + seconds * 1000;
+    if (kind === "work") midCueFiredRef.current = false;
+    if (kind === "rest") restReadyFiredRef.current = false;
   }
 
   function armWork(target = exerciseRef.current) {
@@ -77,6 +85,12 @@ export function WorkoutPlayer({ detail }: { detail: WorkoutDetail }) {
     setPhase("rest");
     phaseRef.current = "rest";
     arm("rest", rest);
+    speakCoach(coachLine("rest-start"), coachOnRef.current);
+  }
+
+  function cueWorkStart(setNow: number, sets: number) {
+    if (setNow >= sets) speakCoach(coachLine("last-set"), coachOnRef.current);
+    else speakCoach(coachLine("start"), coachOnRef.current);
   }
 
   function advance() {
@@ -84,6 +98,7 @@ export function WorkoutPlayer({ detail }: { detail: WorkoutDetail }) {
     const at = indexRef.current;
     const setNow = setNoRef.current;
     if (!current || phaseRef.current === "done" || finishedRef.current) return;
+    speakCoach(coachLine("finish-set"), coachOnRef.current);
     if (setNow < current.sets) {
       startRest(setNow + 1, `Set ${setNow + 1} of ${current.sets}`, current);
       return;
@@ -113,6 +128,7 @@ export function WorkoutPlayer({ detail }: { detail: WorkoutDetail }) {
       endAtRef.current = Date.now() + first.seconds * 1000;
       setRemaining(first.seconds);
     }
+    cueWorkStart(1, first?.sets ?? 1);
     const id = window.setInterval(() => {
       if (pausedRef.current || phaseRef.current === "done" || finishedRef.current) return;
       setElapsed(Math.floor((Date.now() - originRef.current - pausedMsRef.current) / 1000));
@@ -120,6 +136,18 @@ export function WorkoutPlayer({ detail }: { detail: WorkoutDetail }) {
       const left = Math.max(0, Math.ceil((endAtRef.current - Date.now()) / 1000));
       if (left > 0) {
         if (remainingRef.current !== left) setLeft(left);
+        const kind = timerKindRef.current;
+        if (kind === "work" && !midCueFiredRef.current) {
+          const totalSec = exerciseRef.current?.seconds ?? 0;
+          if (totalSec > 0 && left <= Math.ceil(totalSec / 2)) {
+            midCueFiredRef.current = true;
+            speakCoach(coachLine("mid"), coachOnRef.current);
+          }
+        }
+        if (kind === "rest" && !restReadyFiredRef.current && left <= 5) {
+          restReadyFiredRef.current = true;
+          speakCoach(coachLine("rest-ready"), coachOnRef.current);
+        }
         return;
       }
       const kind = timerKindRef.current;
@@ -131,12 +159,15 @@ export function WorkoutPlayer({ detail }: { detail: WorkoutDetail }) {
         phaseRef.current = "work";
         const next = exerciseRef.current;
         if (next?.seconds) arm("work", next.seconds);
+        cueWorkStart(setNoRef.current, next?.sets ?? 1);
         return;
       }
       if (kind === "work" && phaseRef.current === "work") advanceRef.current();
     }, 200);
-    return () => window.clearInterval(id);
-    // Timer owns its own refs; the session does not remount mid-workout.
+    return () => {
+      window.clearInterval(id);
+      if (typeof window !== "undefined" && window.speechSynthesis) window.speechSynthesis.cancel();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -148,6 +179,7 @@ export function WorkoutPlayer({ detail }: { detail: WorkoutDetail }) {
           setLeft(Math.max(0, Math.ceil((endAtRef.current - Date.now()) / 1000)));
           endAtRef.current = null;
         }
+        if (typeof window !== "undefined" && window.speechSynthesis) window.speechSynthesis.cancel();
         return true;
       }
       if (pauseStartedRef.current) {
@@ -176,6 +208,7 @@ export function WorkoutPlayer({ detail }: { detail: WorkoutDetail }) {
     setPhase("work");
     phaseRef.current = "work";
     armWork();
+    cueWorkStart(setNoRef.current, exerciseRef.current?.sets ?? 1);
   }
 
   function goTo(nextIndex: number) {
@@ -190,6 +223,7 @@ export function WorkoutPlayer({ detail }: { detail: WorkoutDetail }) {
     setSetNo(1);
     setNoRef.current = 1;
     armWork(next);
+    cueWorkStart(1, next.sets);
   }
 
   function skipExercise() {
@@ -215,6 +249,7 @@ export function WorkoutPlayer({ detail }: { detail: WorkoutDetail }) {
     setPhase("done");
     phaseRef.current = "done";
     endAtRef.current = null;
+    if (typeof window !== "undefined" && window.speechSynthesis) window.speechSynthesis.cancel();
     try {
       const saved = await completeWorkout({
         data: {
@@ -270,6 +305,12 @@ export function WorkoutPlayer({ detail }: { detail: WorkoutDetail }) {
   }
 
   const resting = phase === "rest";
+  const nextExercise =
+    resting && setNo === 1 && index < total - 1 ? exercises[index + 1] : exercise;
+  const restProgress =
+    resting && exercise.restSeconds > 0 && remaining != null
+      ? 1 - remaining / exercise.restSeconds
+      : 0;
 
   return (
     <div className="mx-auto flex min-h-screen max-w-3xl flex-col px-5 py-5">
@@ -280,37 +321,84 @@ export function WorkoutPlayer({ detail }: { detail: WorkoutDetail }) {
         <p className="text-sm tabular-nums">
           {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
         </p>
-        <p className="text-sm tabular-nums">{formatClock(elapsed)}</p>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            className="text-muted inline-flex items-center gap-1 text-sm"
+            onClick={() => {
+              setCoachOn((value) => {
+                if (value && typeof window !== "undefined" && window.speechSynthesis) {
+                  window.speechSynthesis.cancel();
+                }
+                return !value;
+              });
+            }}
+            aria-pressed={coachOn}
+            aria-label={coachOn ? "Mute coach" : "Unmute coach"}
+          >
+            {coachOn ? <Volume2 className="size-4" /> : <VolumeX className="size-4" />}
+            Coach
+          </button>
+          <p className="text-sm tabular-nums">{formatClock(elapsed)}</p>
+        </div>
       </div>
       <div className="bg-line mt-4 h-px">
         <div className="bg-fg h-px" style={{ width: `${(index / Math.max(1, total)) * 100}%` }} />
       </div>
       <p className="text-faint mt-6 text-xs tracking-[0.18em] uppercase">{detail.workout.title}</p>
-      <h1 className="display mt-2 text-5xl sm:text-6xl">{resting ? "Rest" : exercise.name}</h1>
+
       {resting ? (
-        <>
-          <p className="display text-accent mt-4 text-7xl tabular-nums">{formatClock(remaining ?? 0)}</p>
-          <p className="text-muted mt-3 text-lg">{restLabel}</p>
-        </>
-      ) : exercise.seconds ? (
-        <>
-          <p className="display mt-4 text-7xl tabular-nums">{formatClock(remaining ?? exercise.seconds)}</p>
-          <p className="text-muted mt-3 text-lg">
-            Set {setNo} of {exercise.sets}
-            {paused ? " · paused" : ""}
-          </p>
-        </>
+        <div className="border-line bg-elevated relative mt-4 overflow-hidden border">
+          <div
+            className="bg-accent/20 absolute inset-y-0 left-0 transition-[width] duration-200"
+            style={{ width: `${Math.min(100, Math.max(0, restProgress * 100))}%` }}
+            aria-hidden
+          />
+          <div className="relative px-5 py-10 text-center sm:py-14">
+            <p className="text-faint text-xs tracking-[0.22em] uppercase">Rest</p>
+            <p className="display text-accent mt-3 text-[clamp(4.5rem,18vw,8rem)] leading-none tabular-nums">
+              {formatClock(remaining ?? 0)}
+            </p>
+            <p className="text-fg mt-5 text-xl font-medium">{restLabel}</p>
+            <p className="text-muted mt-2 text-sm">
+              Up next · {nextExercise?.name ?? exercise.name}
+              {nextExercise?.reps
+                ? ` · ${nextExercise.reps} reps`
+                : nextExercise?.seconds
+                  ? ` · ${nextExercise.seconds}s`
+                  : ""}
+            </p>
+          </div>
+        </div>
       ) : (
-        <p className="text-muted mt-3 text-lg">
-          Set {setNo} of {exercise.sets} · {prescription(1, exercise.reps, exercise.seconds).replace("1 × ", "")}
-        </p>
+        <>
+          <h1 className="display mt-2 text-5xl sm:text-6xl">{exercise.name}</h1>
+          {exercise.seconds ? (
+            <>
+              <p className="display mt-4 text-7xl tabular-nums">{formatClock(remaining ?? exercise.seconds)}</p>
+              <p className="text-muted mt-3 text-lg">
+                Set {setNo} of {exercise.sets}
+                {paused ? " · paused" : ""}
+              </p>
+            </>
+          ) : (
+            <p className="text-muted mt-3 text-lg">
+              Set {setNo} of {exercise.sets} · {prescription(1, exercise.reps, exercise.seconds).replace("1 × ", "")}
+            </p>
+          )}
+        </>
       )}
+
       <MediaFrame
         src={exercise.thumbnailUrl}
         videoUrl={exercise.videoUrl}
         alt={exercise.name}
         label={exercise.name}
-        className="mt-6 aspect-[4/5] sm:aspect-[16/9]"
+        className={`mt-6 aspect-[4/5] sm:aspect-[16/9] ${resting ? "opacity-40" : ""}`}
+        autoPlay
+        loop
+        muted
+        playing={!paused && phase === "work"}
       />
       <p className="text-muted mt-4 text-sm">
         {exercise.targetMuscles.join(" · ")} · Rest {exercise.restSeconds}s
@@ -335,7 +423,13 @@ export function WorkoutPlayer({ detail }: { detail: WorkoutDetail }) {
           </div>
         ) : (
           <Button className="w-full" onClick={resting ? skipRest : completeSet}>
-            {resting ? "Skip rest" : setNo < exercise.sets ? "Complete set" : index < total - 1 ? "Complete exercise" : "Finish workout"}
+            {resting
+              ? "Skip rest"
+              : setNo < exercise.sets
+                ? "Complete set"
+                : index < total - 1
+                  ? "Complete exercise"
+                  : "Finish workout"}
           </Button>
         )}
         <div className="grid grid-cols-3 gap-2">
