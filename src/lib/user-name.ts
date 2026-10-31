@@ -1,13 +1,20 @@
 import type { AppUser } from "@/lib/auth/use-current-user";
 
-/** First name for greetings. Falls back to email username, never blank. */
+/** First name for greetings. Never blank. */
 export function firstName(user: AppUser | null | undefined): string {
   const named = user?.displayName?.trim();
-  if (named) return named.split(/\s+/)[0] ?? named;
+  if (named) {
+    const first = named.split(/\s+/)[0];
+    if (first) return first;
+  }
   const email = user?.primaryEmail?.trim();
   if (email) {
     const local = email.split("@")[0]?.trim();
-    if (local) return local;
+    if (local) {
+      // turn john.doe_01 into John
+      const cleaned = local.split(/[._+\-]/)[0] ?? local;
+      if (cleaned) return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+    }
   }
   return "Athlete";
 }
