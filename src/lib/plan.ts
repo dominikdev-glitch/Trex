@@ -58,7 +58,7 @@ export function choosePlan(
     ? "Start with the beginner week."
     : next
       ? `You start with ${chosen.title}. After that week you move to ${next.title}.`
-      : `Your plan is ${chosen.title}. Built from your goal and the gear you have.`;
+      : `Your plan is ${chosen.title}. Based on your goal and the gear you have.`;
 
   return {
     currentId: chosen?.id ?? FOUNDATION,
