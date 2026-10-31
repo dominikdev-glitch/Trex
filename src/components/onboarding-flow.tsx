@@ -1,16 +1,19 @@
 import { useState, type ReactNode } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { saveOnboarding } from "@/lib/account.functions";
+import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { labelLevel } from "@/lib/options";
 import { DAY_OPTIONS, EQUIPMENT_OPTIONS, EXPERIENCE_OPTIONS, GOAL_OPTIONS } from "@/lib/options";
+import { markOnboardingDone } from "@/lib/user-name";
 import type { Profile } from "@/lib/types";
 import { Wordmark } from "@/components/shell";
 import { Button, Choice } from "@/components/ui";
 
-const STEPS = ["Goal", "Level", "Days", "Equipment", "Plan"] as const;
+const STEPS = ["Goal", "Level", "Days", "Gear", "Plan"] as const;
 
 export function OnboardingFlow() {
   const navigate = useNavigate();
+  const { user } = useCurrentUserState();
   const [step, setStep] = useState(0);
   const [goal, setGoal] = useState<string | null>(null);
   const [experience, setExperience] = useState<string | null>(null);
@@ -49,6 +52,7 @@ export function OnboardingFlow() {
           data: { goal, experience, trainingDays: days, equipment },
         });
         setProfile(saved);
+        if (user?.id) markOnboardingDone(user.id);
         setStep(4);
       } catch (caught) {
         setError(caught instanceof Error ? caught.message : "Could not save your plan.");
@@ -63,7 +67,7 @@ export function OnboardingFlow() {
       <div className="flex items-center justify-between">
         <Wordmark />
         <p className="text-faint text-sm tabular-nums">
-          0{step + 1} / 0{STEPS.length}
+          {step + 1} / {STEPS.length}
         </p>
       </div>
       <div className="bg-line mt-6 h-px">
@@ -71,7 +75,7 @@ export function OnboardingFlow() {
       </div>
       <div className="flex flex-1 flex-col py-10">
         {step === 0 ? (
-          <Step title="What's your goal?" body="TREX uses this to pick the plan, not a generic checklist.">
+          <Step title="What do you want?" body="Pick one main goal. We use this to choose your plan.">
             {GOAL_OPTIONS.map((option) => (
               <Choice
                 key={option.id}
@@ -84,7 +88,7 @@ export function OnboardingFlow() {
           </Step>
         ) : null}
         {step === 1 ? (
-          <Step title="What's your experience?" body="Beginners start on the foundation week when the goal plan is harder.">
+          <Step title="How experienced are you?" body="If you are new, we start you on an easier week first.">
             {EXPERIENCE_OPTIONS.map((option) => (
               <Choice
                 key={option.id}
@@ -97,7 +101,7 @@ export function OnboardingFlow() {
           </Step>
         ) : null}
         {step === 2 ? (
-          <Step title="How many days can you train?" body="This becomes the weekly target on your dashboard.">
+          <Step title="How many days can you train?" body="This sets your weekly target on Home.">
             {DAY_OPTIONS.map((option) => (
               <Choice
                 key={option.id}
@@ -110,7 +114,7 @@ export function OnboardingFlow() {
           </Step>
         ) : null}
         {step === 3 ? (
-          <Step title="What equipment do you have?" body="Pick everything you can actually use this week.">
+          <Step title="What gear do you have?" body="Pick everything you can use this week.">
             {EQUIPMENT_OPTIONS.map((option) => (
               <Choice
                 key={option.id}
@@ -152,10 +156,16 @@ export function OnboardingFlow() {
         ) : null}
         {step < 4 ? (
           <Button className="flex-1" disabled={!canContinue || busy} onClick={() => void next()}>
-            {busy ? "Building plan…" : step === 3 ? "Build my plan" : "Continue"}
+            {busy ? "Saving…" : step === 3 ? "Save my plan" : "Continue"}
           </Button>
         ) : (
-          <Button className="flex-1" onClick={() => void navigate({ to: "/dashboard" })}>
+          <Button
+            className="flex-1"
+            onClick={() => {
+              if (user?.id) markOnboardingDone(user.id);
+              void navigate({ to: "/dashboard" });
+            }}
+          >
             Go to training
           </Button>
         )}

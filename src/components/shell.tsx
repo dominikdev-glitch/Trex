@@ -50,7 +50,7 @@ export function Shell({ children, mode = "auto" }: { children: ReactNode; mode?:
           You are offline. Sessions need a connection to save.
         </p>
       ) : null}
-      <div id="main" className={resolved === "app" ? "pb-24 md:pb-0" : undefined}>
+      <div id="main" className={resolved === "app" ? "pb-28 md:pb-0" : undefined}>
         {children}
       </div>
       {resolved === "app" ? <MobileNav /> : null}
@@ -127,11 +127,11 @@ function TopBar({ app, overlay }: { app: boolean; overlay: boolean }) {
 
 function MobileNav() {
   const item =
-    "flex min-h-14 flex-1 flex-col items-center justify-center text-[11px] tracking-wide text-faint data-[status=active]:text-fg";
+    "flex min-h-[3.5rem] flex-1 flex-col items-center justify-center gap-0.5 text-[11px] font-medium tracking-wide text-faint data-[status=active]:text-fg";
   return (
     <nav
-      className="border-line bg-bg fixed inset-x-0 bottom-0 z-30 border-t pb-[env(safe-area-inset-bottom)] md:hidden"
-      aria-label="Mobile"
+      className="border-line bg-bg/95 fixed inset-x-0 bottom-0 z-50 border-t backdrop-blur-md pb-[env(safe-area-inset-bottom)] md:hidden"
+      aria-label="Bottom menu"
     >
       <div className="flex">
         <Link to="/dashboard" className={item} activeProps={{ className: item }}>
@@ -139,6 +139,9 @@ function MobileNav() {
         </Link>
         <Link to="/workouts" className={item} activeProps={{ className: item }}>
           Workouts
+        </Link>
+        <Link to="/programs" className={item} activeProps={{ className: item }}>
+          Programs
         </Link>
         <Link to="/progress" className={item} activeProps={{ className: item }}>
           Progress

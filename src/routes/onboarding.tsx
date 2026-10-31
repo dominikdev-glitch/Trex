@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { RedirectToSignIn } from "@/lib/auth/gates";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { getProfile } from "@/lib/account.functions";
+import { isOnboardingMarkedDone } from "@/lib/user-name";
 import { OnboardingFlow } from "@/components/onboarding-flow";
 import { PageSkeleton } from "@/components/states";
 
@@ -16,6 +17,10 @@ function OnboardingPage() {
 
   useEffect(() => {
     if (!user) return;
+    if (isOnboardingMarkedDone(user.id)) {
+      setReady("done");
+      return;
+    }
     let cancel = false;
     getProfile()
       .then((profile) => {
