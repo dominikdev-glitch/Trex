@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { GROK_PROVIDERS, authClient, signIn } from "@/lib/auth/client";
 import { getProfile } from "@/lib/account.functions";
 import { safeRedirect } from "@/lib/format";
+import { isOnboardingMarkedDone } from "@/lib/user-name";
 import { MediaFrame } from "@/components/media";
 import { Wordmark } from "@/components/shell";
 import { Button, Field, TextInput } from "@/components/ui";
@@ -19,18 +20,36 @@ function storeToken(token: string | null) {
   }
 }
 
-async function afterSession(navigate: ReturnType<typeof useNavigate>, redirect: string) {
-  await authClient.getSession();
-  try {
-    const profile = await getProfile();
-    if (!profile.onboardingCompleted) {
-      await navigate({ to: "/onboarding" });
-      return;
-    }
-  } catch {
+async function afterSession(
+  navigate: ReturnType<typeof useNavigate>,
+  redirect: string,
+  mode: "login" | "register",
+) {
+  const session = await authClient.getSession();
+  const userId = session.data?.user?.id as string | undefined;
+
+  if (mode === "register") {
     await navigate({ to: "/onboarding" });
     return;
   }
+
+  let needsSetup = false;
+  try {
+    const profile = await getProfile();
+    needsSetup = !profile.onboardingCompleted;
+  } catch {
+    needsSetup = userId ? !isOnboardingMarkedDone(userId) : false;
+  }
+
+  if (needsSetup && userId && isOnboardingMarkedDone(userId)) {
+    await navigate({ to: "/dashboard" });
+    return;
+  }
+  if (needsSetup) {
+    await navigate({ to: "/onboarding" });
+    return;
+  }
+
   if (redirect === "/dashboard") await navigate({ to: "/dashboard" });
   else if (redirect.startsWith("/workout/")) window.location.assign(redirect);
   else if (redirect.startsWith("/workouts")) await navigate({ to: "/workouts" });
@@ -88,7 +107,7 @@ export function AuthScreen({ mode }: { mode: "login" | "register" }) {
         }
         storeToken(headerToken || result.data?.token || null);
       }
-      await afterSession(navigate, redirect);
+      await afterSession(navigate, redirect, mode);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Sign-in failed.");
     } finally {
@@ -99,7 +118,7 @@ export function AuthScreen({ mode }: { mode: "login" | "register" }) {
   async function onReset(event: FormEvent) {
     event.preventDefault();
     setResetNote(null);
-    const client = authClient as unknown as {
+    constclient = authClient as unknown as {
       requestPasswordReset?: (args: { email: string; redirectTo: string }) => Promise<{ error?: { message?: string } | null }>;
     };
     if (!client.requestPasswordReset) {
@@ -185,7 +204,7 @@ export function AuthScreen({ mode }: { mode: "login" | "register" }) {
               </p>
             ) : null}
             <Button type="submit" disabled={busy} className="w-full">
-              {busy ? "Working…" : mode === "register" ? "Create account" : "Sign in"}
+              {busy ? "Please wait…" : mode === "register" ? "Create account" : "Sign in"}
             </Button>
           </form>
           {mode === "login" ? (
