@@ -118,7 +118,7 @@ export function AuthScreen({ mode }: { mode: "login" | "register" }) {
   async function onReset(event: FormEvent) {
     event.preventDefault();
     setResetNote(null);
-    constclient = authClient as unknown as {
+    const client = authClient as unknown as {
       requestPasswordReset?: (args: { email: string; redirectTo: string }) => Promise<{ error?: { message?: string } | null }>;
     };
     if (!client.requestPasswordReset) {
