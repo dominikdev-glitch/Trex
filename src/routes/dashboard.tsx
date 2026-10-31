@@ -15,7 +15,7 @@ export const Route = createFileRoute("/dashboard")({
 });
 
 function DashboardPage() {
-  const { user, isPending } = use collCurrentUserState();
+  const { user, isPending } = useCurrentUserState();
   const [data, setData] = useState<DashboardData | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -146,7 +146,7 @@ function DashboardPage() {
           </Link>
         </div>
         {data.recent.length === 0 ? (
-          <p className="text-muted mt-3 text-sm">No sessions yet. Start today&apos;s workout.</p>
+          <p className="text-muted mt-3 text-sm">No sessions yet. Start today's workout.</p>
         ) : (
           <ul className="border-line mt-3 divide-y divide-line border-y">
             {data.recent.map((item) => (
