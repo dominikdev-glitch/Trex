@@ -2,7 +2,8 @@ import { useEffect, useState, type ReactNode } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
 
-const APP_PREFIXES = [n  "/dashboard",
+const APP_PREFIXES = [
+  "/dashboard",
   "/workouts",
   "/programs",
   "/progress",
@@ -38,7 +39,7 @@ function NavLink({
 }
 
 export function Shell({ children, mode = "auto" }: { children: ReactNode; mode?: "marketing" | "app" | "plain" | "auto" }) {
-  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  const pathname = useRouterState({ select: (state) => state.location.pathname cons });
   const resolved =
     mode === "auto" ? (APP_PREFIXES.some((prefix) => pathname.startsWith(prefix)) ? "app" : "marketing") : mode;
   const online = useOnline();
