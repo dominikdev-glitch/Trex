@@ -2,7 +2,15 @@ import { useEffect, useState, type ReactNode } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
 
-const APP_PREFIXES = ["/dashboard", "/workouts", "/programs", "/progress", "/profile", "/settings", "/exercises", "/workout"];
+const APP_PREFIXES = [n  "/dashboard",
+  "/workouts",
+  "/programs",
+  "/progress",
+  "/profile",
+  "/settings",
+  "/exercises",
+  "/workout",
+];
 
 function NavLink({
   to,
@@ -50,7 +58,7 @@ export function Shell({ children, mode = "auto" }: { children: ReactNode; mode?:
           You are offline. Sessions need a connection to save.
         </p>
       ) : null}
-      <div id="main" className={resolved === "app" ? "pb-28 md:pb-0" : undefined}>
+      <div id="main" className={resolved === "app" ? "pb-24" : undefined}>
         {children}
       </div>
       {resolved === "app" ? <MobileNav /> : null}
@@ -68,12 +76,12 @@ function TopBar({ app, overlay }: { app: boolean; overlay: boolean }) {
         solid ? "border-line bg-bg/95 border-b backdrop-blur-md" : "border-transparent bg-transparent"
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-5">
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 px-5">
         <Link to={app && user ? "/dashboard" : "/"} className="flex items-center gap-2" aria-label="TREX home">
           <span className="bg-accent h-2.5 w-2.5" aria-hidden />
           <span className="display text-2xl leading-none">Trex</span>
         </Link>
-        <nav className="hidden items-center gap-7 md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
           {app ? (
             <>
               <NavLink to="/dashboard" label="Home" />
@@ -100,12 +108,12 @@ function TopBar({ app, overlay }: { app: boolean; overlay: boolean }) {
           ) : null}
           {!isPending && !user ? (
             <>
-              <Link to="/login" className={`hidden text-sm sm:inline ${solid ? "text-fg" : "text-fg"}`}>
+              <Link to="/login" className="hidden text-sm sm:inline">
                 Log in
               </Link>
               <Link
                 to="/register"
-                className="bg-accent text-accent-fg inline-flex min-h-11 items-center px-4 text-sm font-medium"
+                className="bg-accent text-accent-fg inline-flex min-h-10 items-center px-4 text-sm font-medium"
               >
                 Start training
               </Link>
@@ -114,7 +122,7 @@ function TopBar({ app, overlay }: { app: boolean; overlay: boolean }) {
           {!isPending && user && !app ? (
             <Link
               to="/dashboard"
-              className="bg-accent text-accent-fg inline-flex min-h-11 items-center px-4 text-sm font-medium"
+              className="bg-accent text-accent-fg inline-flex min-h-10 items-center px-4 text-sm font-medium"
             >
               Continue
             </Link>
@@ -127,10 +135,10 @@ function TopBar({ app, overlay }: { app: boolean; overlay: boolean }) {
 
 function MobileNav() {
   const item =
-    "flex min-h-[3.5rem] flex-1 flex-col items-center justify-center gap-0.5 text-[11px] font-medium tracking-wide text-faint data-[status=active]:text-fg";
+    "flex min-h-[3.25rem] flex-1 flex-col items-center justify-center gap-0.5 text-[11px] font-medium tracking-wide text-faint data-[status=active]:text-fg";
   return (
     <nav
-      className="border-line bg-bg/95 fixed inset-x-0 bottom-0 z-50 border-t backdrop-blur-md pb-[env(safe-area-inset-bottom)] md:hidden"
+      className="border-line bg-bg/95 fixed inset-x-0 bottom-0 z-50 border-t backdrop-blur-md pb-[env(safe-area-inset-bottom)] lg:hidden"
       aria-label="Bottom menu"
     >
       <div className="flex">
