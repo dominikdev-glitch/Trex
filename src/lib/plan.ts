@@ -55,10 +55,10 @@ export function choosePlan(
   }
 
   const reason = !chosen
-    ? "7 Day Beginner Start is ready."
+    ? "Start with the beginner week."
     : next
-      ? `${next.title} matches the goal you picked. The first week is ${chosen.title} so the patterns are solid before that plan.`
-      : `${chosen.title} matches your goal, level, and equipment.`;
+      ? `You start with ${chosen.title}. After that week you move to ${next.title}.`
+      : `Your plan is ${chosen.title}. Built from your goal and the gear you have.`;
 
   return {
     currentId: chosen?.id ?? FOUNDATION,
